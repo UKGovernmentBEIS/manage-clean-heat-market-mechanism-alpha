@@ -1,0 +1,125 @@
+<nav class="moj-sub-navigation" aria-label="Sub navigation">
+  <ul class="moj-sub-navigation__list">
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        aria-current="page"
+        routerLink="/manufacturer/trading/ledger"
+      >
+        Transfer ledger
+      </a>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        routerLink="/manufacturer/trading/requests"
+      >
+        Transfer requests
+      </a>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        routerLink="/manufacturer/trading/contacts"
+      >
+        Transfer contacts
+      </a>
+    </li>
+  </ul>
+</nav>
+<section>
+  <h1 class="govuk-heading-l">Transfer ledger 2025</h1>
+  <h2 class="govuk-heading-m">
+    Credit transfer window&nbsp;
+    <span class="govuk-tag govuk-tag--green">open</span>
+  </h2>
+</section>
+<section *ngIf="balance$ | async; let balance">
+  <div class="main-card">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <h3 class="govuk-heading-s main-card__title">Current credit balance</h3>
+        <p class="govuk-body main-card__subtitle">
+          Including earned through heat pump installs, transfers, and credits
+          brought forward from 2024
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        <p class="govuk-body main-card__value">
+          {{ balance.balance | number : "" : "en-GB" }}
+        </p>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <h3 class="govuk-heading-s main-card__title">Excess credits</h3>
+        <p class="govuk-body main-card__subtitle">
+          Credit balance above total obligation to date
+        </p>
+      </div>
+      <div class="govuk-grid-column-one-quarter">
+        <p class="govuk-body main-card__value">
+          {{ balance.excess | number : "" : "en-GB" }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text">
+        How does trading credits work?
+      </span>
+    </summary>
+    <div class="govuk-details__text">
+      For the CHMM scheme, the arranging and financials of trading credits is
+      between the two parties and happens off system. When a trade has been
+      agreed, it must be actioned in this system. The parties must nominate one
+      to initiate the trade. The other party must then review and action the
+      trade. Once this has happened, the credits will be moved from one party to
+      another. The trade window is open for this year between [date range].
+    </div>
+  </details>
+</section>
+<section *ngIf="requests$ | async; let requests">
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Transaction ID</th>
+        <th scope="col" class="govuk-table__header">Date and time</th>
+        <th scope="col" class="govuk-table__header">Organisation</th>
+        <th scope="col" class="govuk-table__header right-align">
+          Transferred amount
+        </th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <ng-container *ngFor="let request of requests">
+        <tr class="govuk-table__row" *ngIf="request.approved">
+          <td class="govuk-table__cell">{{ request.id }}</td>
+          <td class="govuk-table__cell">
+            {{ request.date | date : "dd MMM yyyy HH:mm" }}
+          </td>
+          <td class="govuk-table__cell">{{ request.manufacturer }}</td>
+          <ng-container *ngIf="request.credits >= 0">
+            <td
+              *ngIf="request.credits >= 0"
+              class="govuk-table__cell right-align credits-in"
+            >
+              <span class="plus-minus credits-in">+</span>
+              {{ request.credits | number : "" : "en-GB" }}
+            </td>
+          </ng-container>
+          <ng-container *ngIf="request.credits < 0">
+            <td
+              *ngIf="request.credits < 0"
+              class="govuk-table__cell right-align credits-out"
+            >
+              <span class="plus-minus credits-out">&#8211;</span>
+              {{ -request.credits | number : "" : "en-GB" }}
+            </td>
+          </ng-container>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</section>

@@ -1,0 +1,51 @@
+<h1 class="govuk-heading-l">Check the details before submitting</h1>
+<h2 class="govuk-heading-m">Account details</h2>
+<ng-container *ngIf="user$ | async; let user">
+  <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Name
+      </dt>
+      <dd class="govuk-summary-list__value">
+        {{user.name}}
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href
+          routerLink="/admin/admin-accounts/user">
+          Change<span class="govuk-visually-hidden"> name</span>
+        </a>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Email
+      </dt>
+      <dd class="govuk-summary-list__value">
+        {{user.email}}
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href
+          routerLink="/admin/admin-accounts/user">
+          Change<span class="govuk-visually-hidden"> email</span>
+        </a>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        Status
+      </dt>
+      <dd class="govuk-summary-list__value">
+        {{user.status}}
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" href
+          routerLink="/admin/admin-accounts/user">
+          Change<span class="govuk-visually-hidden"> status</span>
+        </a>
+      </dd>
+    </div>
+  </dl>
+  <button class="govuk-button" data-module="govuk-button" (click)="onSubmit(user)">
+    Save and send notification
+  </button>
+</ng-container>

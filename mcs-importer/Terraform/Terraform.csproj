@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <OutputType>Library</OutputType>
+    <ProjectGuid>{AD093127-E923-4DCF-9E31-35C0FB59EE2E}</ProjectGuid>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <None Include="main.tf" />
+    <None Include="dev-terraform.tfvars" />
+    <None Include="modules\lambda\lambda.tf" />
+    <None Include="modules\lambda\variables.tf" />
+    <None Include="modules\rds\output.tf" />
+    <None Include="modules\rds\rds.tf" />
+    <None Include="modules\rds\variables.tf" />
+    <None Include="modules\security_group\output.tf" />
+    <None Include="modules\security_group\security_group.tf" />
+    <None Include="modules\security_group\variables.tf" />
+    <None Include="modules\vpc\output.tf" />
+    <None Include="modules\vpc\variables.tf" />
+    <None Include="modules\vpc\vpc.tf" />
+    <None Include="variables.tf" />
+  </ItemGroup>
+</Project>

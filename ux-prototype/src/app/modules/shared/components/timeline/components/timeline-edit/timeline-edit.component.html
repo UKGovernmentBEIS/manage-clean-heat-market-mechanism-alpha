@@ -1,0 +1,45 @@
+<ng-container *ngIf="edit">
+  <div class="govuk-inset-text">
+    <p>Quarterly data edited</p>
+    <table class="govuk-table edit-history">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Gas boilers old</th>
+          <th scope="col" class="govuk-table__header">Gas boilers new</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            {{ edit.previousData.gas | number : "" : "en-GB" }}
+          </td>
+          <td class="govuk-table__cell">
+            {{ edit.updatedData.gas | number : "" : "en-GB" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="govuk-table edit-history">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Oil boilers old</th>
+          <th scope="col" class="govuk-table__header">Oil boilers new</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            {{ edit.previousData.oil | number : "" : "en-GB" }}
+          </td>
+          <td class="govuk-table__cell">
+            {{ edit.updatedData.oil | number : "" : "en-GB" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <i [attr.data-author]="edit.editor">
+      Edited by {{ edit.editor }}
+      <span [attr.data-date]="edit.date">{{ edit.date }}</span>
+    </i>
+  </div>
+</ng-container>

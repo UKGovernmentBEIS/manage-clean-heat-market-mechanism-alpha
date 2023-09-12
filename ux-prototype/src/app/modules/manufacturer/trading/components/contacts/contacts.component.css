@@ -1,0 +1,10 @@
+.contact {
+  max-width: 75%;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  border-left: solid 5px #b1b4b6;
+}
+
+.contact .govuk-summary-list__row:last-child {
+  border-bottom-width: 0px;
+}

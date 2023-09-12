@@ -1,0 +1,107 @@
+<form [formGroup]="boilerSalesForm" (ngSubmit)="onSubmit()">
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">
+          {{ admin ? "Edit" : "Report" }}
+          <span *ngIf="quarter === 'annual'; else quarterly">
+            Annual Boiler Sales for {{ year }}
+          </span>
+          <ng-template #quarterly>
+            <span>Boiler Sales for Quarter {{ quarter }} {{ year }}</span>
+          </ng-template>
+        </h1>
+      </legend>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="address-line-1">
+          Number of gas boiler sales
+        </label>
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              What counts as a gas boiler?
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            A domestic gas boiler is a heating device that uses natural gas to
+            generate hot water or steam for heating purposes within a residential property.
+          </div>
+        </details>
+        <input
+          class="govuk-input govuk-!-width-one-quarter"
+          formControlName="gas"
+          id="gas"
+          name="gas"
+          type="number"
+          spellcheck="false"
+          autocomplete="gas"
+        />
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="address-line-2">
+          Number of oil boiler sales
+        </label>
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              What counts as an oil boiler?
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            A domestic oil boiler is a heating device that uses oil as a fuel source
+            to produce hot water or steam for heating purposes within a residential property.
+          </div>
+        </details>
+        <input
+          class="govuk-input govuk-!-width-one-quarter"
+          formControlName="oil"
+          id="oil"
+          name="oil"
+          type="number"
+          spellcheck="false"
+          autocomplete="oil"
+        />
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="file-upload-1"
+          >Add supporting evidence</label
+        >
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              What to add as supporting evidence?
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            Supporting evidence for sales figures can include sales reports,
+            financial statements, transaction records, customer testimonials,
+            market research data, sales contracts, invoices, purchase orders,
+            and any other documentation that demonstrates the actual sales
+            transactions and their corresponding values.
+          </div>
+        </details>
+        <input
+          class="govuk-file-upload"
+          id="file"
+          name="file"
+          type="file"
+          (change)="onFileChange($event)"
+          multiple
+        />
+      </div>
+    </fieldset>
+  </div>
+  <div class="govuk-button-group">
+    <button class="govuk-button" type="submit" data-module="govuk-button">
+      {{ submitBtnText }}
+    </button>
+    <button
+      class="govuk-button govuk-button--secondary"
+      type="button"
+      data-module="govuk-button"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

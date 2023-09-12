@@ -1,0 +1,316 @@
+<h1 class="govuk-heading-l">Target and credit summary</h1>
+<div *ngIf="obligation$ | async; let obligation" class="govuk-body">
+  <div
+    class="obligation-container main-cards--{{
+      obligation.met ? 'met' : 'not-met'
+    }}"
+  >
+    <p class="obligation-container__text">2025 Obligation</p>
+    <ng-container *ngIf="obligation.obligation > 0">
+      <span *ngIf="obligation.met" class="govuk-tag govuk-tag--green"
+        >Currently meeting</span
+      >
+      <span *ngIf="!obligation.met" class="govuk-tag govuk-tag--red"
+        >Not meeting yet</span
+      >
+    </ng-container>
+    <ng-container *ngIf="obligation.obligation == 0">
+      <span class="govuk-tag govuk-tag--green">No obligation</span>
+    </ng-container>
+  </div>
+  <section>
+    <div
+      class="main-cards main-cards--{{ obligation.met ? 'met' : 'not-met' }}"
+    >
+      <div class="main-card">
+        <p class="main-card__title">Total obligation to date</p>
+        <p class="main-card__subtitle">&nbsp;</p>
+        <p class="main-card__value">
+          {{ obligation.obligation | number : "" : "en-GB" }}
+        </p>
+      </div>
+      <div class="main-card">
+        <p class="main-card__title">Total credit balance</p>
+        <p class="main-card__subtitle">&nbsp;</p>
+        <p class="main-card__value">
+          {{ obligation.credits | number : "" : "en-GB" }}
+        </p>
+      </div>
+      <div class="main-card">
+        <p *ngIf="obligation.met" class="main-card__title">Excess</p>
+        <p *ngIf="!obligation.met" class="main-card__title">Shortfall</p>
+        <p class="main-card__subtitle">Total obligation minus credit balance</p>
+        <p class="main-card__value">
+          {{ obligation.difference | number : "" : "en-GB" }}
+        </p>
+      </div>
+    </div>
+    <details class="govuk-details" data-module="govuk-details">
+      <summary class="govuk-details__summary">
+        <span class="govuk-details__summary-text">
+          What happens if I don't meet my obligation?
+        </span>
+      </summary>
+      <div class="govuk-details__text">Insert text here</div>
+    </details>
+  </section>
+  <section *ngIf="obligation.salesReported == true">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <ng-container
+          *ngIf="
+            obligation.carryOverObligation == 0 &&
+            obligation.carryOverCredits == 0
+          "
+        >
+          <div class="govuk-warning-text">
+            <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+            <strong class="govuk-warning-text__text">
+              <span class="govuk-warning-text__assistive">Warning</span>
+              If you plan to carry over some of your obligation or credits from
+              the last obligation year, this will happen on 1st May 2026.
+            </strong>
+          </div>
+        </ng-container>
+        <h2 class="govuk-heading-m section-header">
+          2025 Obligation calculation
+        </h2>
+        <div class="govuk-inset-text">
+          Sales below the 20,000 threshold for gas boilers and the 1,000
+          threshold for oil boilers are not counted towards your obligation.
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <table class="govuk-table bigger-borders">
+          <caption class="govuk-table__caption govuk-table__caption--m">
+            Current sales data above the threshold
+          </caption>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                Gas boiler sales above threshold (total sales)
+              </th>
+              <ng-container *ngIf="obligation.gas <= 20_000">
+                <td class="govuk-table__cell total-sales-cell">
+                  ({{ obligation.gas | number : "" : "en-GB" }})
+                </td>
+                <td class="govuk-table__cell above-sales-cell">0</td>
+              </ng-container>
+              <ng-container *ngIf="obligation.gas > 20_000">
+                <td class="govuk-table__cell total-sales-cell">
+                  ({{ obligation.gas + 20_000 | number : "" : "en-GB" }})
+                </td>
+                <td class="govuk-table__cell above-sales-cell">
+                  {{ obligation.gas | number : "" : "en-GB" }}
+                </td>
+              </ng-container>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                Oil boiler sales above threshold (total sales)
+              </th>
+              <ng-container *ngIf="obligation.oil <= 1_000">
+                <td class="govuk-table__cell total-sales-cell">
+                  ({{ obligation.oil | number : "" : "en-GB" }})
+                </td>
+                <td class="govuk-table__cell above-sales-cell">0</td>
+              </ng-container>
+              <ng-container *ngIf="obligation.oil > 1_000">
+                <td class="govuk-table__cell total-sales-cell">
+                  ({{ obligation.oil + 1_000 | number : "" : "en-GB" }})
+                </td>
+                <td class="govuk-table__cell above-sales-cell">
+                  {{ obligation.oil | number : "" : "en-GB" }}
+                </td>
+              </ng-container>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                Total sales above threshold (total of all sales)
+              </th>
+              <ng-container
+                *ngIf="obligation.gas <= 20_000 && obligation.oil <= 1_000"
+              >
+                <td class="govuk-table__cell total-sales-cell">
+                  ({{
+                    obligation.gas + obligation.oil | number : "" : "en-GB"
+                  }})
+                </td>
+                <td class="govuk-table__cell above-sales-cell">0</td>
+              </ng-container>
+              <ng-container
+                *ngIf="!(obligation.gas <= 20_000 && obligation.oil <= 1_000)"
+              >
+                <td class="govuk-table__cell total-sales-cell">
+                  ({{ obligation.totalSales + 21_000 | number : "" : "en-GB" }})
+                </td>
+                <td class="govuk-table__cell above-sales-cell">
+                  {{ obligation.totalSales | number : "" : "en-GB" }}
+                </td>
+              </ng-container>
+            </tr>
+            <tr class="govuk-table__row">
+              <th
+                colspan="2"
+                scope="row"
+                class="govuk-table__header obligation-table-footer"
+              >
+                <strong>Obligation generated this year</strong>
+                <em
+                  >{{ this.targetCreditProvider.obligationPercentage }}% of
+                  total sales above threshold</em
+                >
+              </th>
+              <td class="govuk-table__cell above-sales-cell">
+                {{ obligation.totalSalesObligation | number : "" : "en-GB" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="govuk-grid-column-one-third">
+        <div
+          class="small-card-container"
+          *ngIf="obligation.carryOverObligation > 0"
+        >
+          <div class="small-card">
+            <p class="small-card__title">
+              Obligation brought forward from 2024
+            </p>
+            <p class="small-card__value">
+              {{ obligation.carryOverObligation | number : "" : "en-GB" }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="big-card">
+          <p class="big-card__title">Total obligation to date</p>
+          <p class="big-card__value">
+            {{ obligation.obligation | number : "" : "en-GB" }}
+          </p>
+        </div>
+        <p class="govuk-body under-main-card">
+          This is estimated until your annual verified data is submitted and
+          approved
+        </p>
+      </div>
+    </div>
+  </section>
+  <section *ngIf="obligation.salesReported == false">
+    <div class="govuk-inset-text">
+      There has not been any sales data reported yet to calculate an obligation.
+    </div>
+  </section>
+  <hr />
+  <br />
+  <section>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-full">
+        <h2 class="govuk-heading-m section-header">
+          2025 Credit balance calculation
+        </h2>
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Heat pump type</th>
+              <th scope="col" class="govuk-table__header">Number installed</th>
+              <th scope="col" class="govuk-table__header">
+                <div>Credit value per heat pump</div>
+                <em class="table-tooltip"
+                  >(multiplier applied to type of heat pump)</em
+                >
+              </th>
+              <th scope="col" class="govuk-table__header">Credits earned</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">
+                Heat pump (non-hybrid)
+              </th>
+              <td class="govuk-table__cell">
+                {{ obligation.nonHybrid | number : "" : "en-GB" }}
+              </td>
+              <td class="govuk-table__cell">
+                {{ this.targetCreditProvider.nonHybridMultiplier }}
+              </td>
+              <td class="govuk-table__cell">
+                {{
+                  obligation.nonHybrid *
+                    this.targetCreditProvider.nonHybridMultiplier
+                    | number : "" : "en-GB"
+                }}
+              </td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header">Hybrid heat pump</th>
+              <td class="govuk-table__cell">
+                {{ obligation.hybrid | number : "" : "en-GB" }}
+              </td>
+              <td class="govuk-table__cell">
+                {{ this.targetCreditProvider.hybridMultiplier }}
+              </td>
+              <td class="govuk-table__cell">
+                {{
+                  obligation.hybrid * this.targetCreditProvider.hybridMultiplier
+                    | number : "" : "en-GB"
+                }}
+              </td>
+            </tr>
+            <tr class="govuk-table__row">
+              <th scope="row" class="govuk-table__header" colspan="3">
+                Total credits earned from installs in 2025
+              </th>
+              <td class="govuk-table__cell">
+                <strong>
+                  {{ obligation.totalInstalls | number : "" : "en-GB" }}</strong
+                >
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="credit-cards">
+          <div class="small-card-container">
+            <div class="small-card">
+              <p class="small-card__title">Credits transferred in</p>
+              <p class="small-card__value">
+                {{ obligation.tradedIn | number : "" : "en-GB" }}
+              </p>
+            </div>
+          </div>
+          <div class="small-card-container">
+            <div class="small-card">
+              <p class="small-card__title">Credits transferred out</p>
+              <p class="small-card__value">
+                {{ obligation.tradedOut | number : "" : "en-GB" }}
+              </p>
+            </div>
+          </div>
+          <div class="small-card-container">
+            <div class="small-card" *ngIf="obligation.carryOverCredits > 0">
+              <p class="small-card__title">Credits brought forward from 2024</p>
+              <p class="small-card__value">
+                {{ obligation.carryOverCredits | number : "" : "en-GB" }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-two-thirds">
+        <div class="big-card">
+          <p class="big-card__title">Current credit balance</p>
+          <p class="big-card__value">
+            {{ obligation.credits | number : "" : "en-GB" }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

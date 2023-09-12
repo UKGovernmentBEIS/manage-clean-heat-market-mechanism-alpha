@@ -1,0 +1,121 @@
+<nav class="moj-sub-navigation" aria-label="Sub navigation">
+  <ul class="moj-sub-navigation__list">
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        routerLink="/manufacturer/trading/ledger"
+      >
+        Transfer ledger
+      </a>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        aria-current="page"
+        routerLink="/manufacturer/trading/requests"
+      >
+        Transfer requests
+      </a>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        routerLink="/manufacturer/trading/contacts"
+      >
+        Transfer contacts
+      </a>
+    </li>
+  </ul>
+</nav>
+<section *ngIf="requests$ | async; let requests">
+  <a class="govuk-button" routerLink="/manufacturer/trading/requests/create"
+    >Create request</a
+  >
+  <h2 class="govuk-heading-m">Transfer requests to review</h2>
+  <p class="govuk-body">
+    Transfer requests made by other organisations which are waiting for review
+    from your organisation
+  </p>
+  <ng-container *ngFor="let request of requests">
+    <div
+      class="request-card"
+      *ngIf="
+        request.requestedBy == 'THEM' &&
+        request.approved == false &&
+        request.rejected == false
+      "
+    >
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <p class="govuk-body request-card__title">
+            {{ request.credits | number : "" : "en-GB" }} credits from
+            {{ request.manufacturer }}
+          </p>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-quarter">
+              <p class="govuk-body request-card__subtitle">Transaction ID</p>
+              <p class="govuk-body request-card__value">{{ request.id }}</p>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <p class="govuk-body request-card__subtitle">Date and time</p>
+              <p class="govuk-body request-card__value">
+                {{ request.date | date : "dd MMM yyyy HH:mm" }}
+              </p>
+            </div>
+            <div class="govuk-grid-column-one-quarter">&nbsp;</div>
+            <div class="govuk-grid-column-one-quarter review-button-container">
+              <a class="govuk-button review-button" (click)="review(request)"
+                >Review</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <br />
+  <h2 class="govuk-heading-m">Transfer requests waiting for review</h2>
+  <p class="govuk-body">
+    Transfer requests your organisation has made which are waiting for review
+    and action from the other party
+  </p>
+  <ng-container *ngFor="let request of requests">
+    <div
+      class="request-card"
+      *ngIf="
+        request.requestedBy == 'US' &&
+        request.approved == false &&
+        request.rejected == false
+      "
+    >
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <p class="govuk-body request-card__title">
+            {{ request.credits | number : "" : "en-GB" }} credits to
+            {{ request.manufacturer }}
+          </p>
+          <div class="govuk-grid-row">
+            <div class="govuk-grid-column-one-quarter">
+              <p class="govuk-body request-card__subtitle">Transaction ID</p>
+              <p class="govuk-body request-card__value">{{ request.id }}</p>
+            </div>
+            <div class="govuk-grid-column-one-quarter">
+              <p class="govuk-body request-card__subtitle">Date and time</p>
+              <p class="govuk-body request-card__value">
+                {{ request.date | date : "dd MMM yyyy HH:mm" }}
+              </p>
+            </div>
+            <div class="govuk-grid-column-one-quarter">&nbsp;</div>
+            <div class="govuk-grid-column-one-quarter review-button-container">
+              <a
+                class="govuk-button govuk-button--secondary review-button"
+                (click)="review(request)"
+                >Cancel</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</section>

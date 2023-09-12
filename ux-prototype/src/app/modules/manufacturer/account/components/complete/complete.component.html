@@ -1,0 +1,21 @@
+<ng-container *ngIf="account$ | async; let account">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Organisation details submitted</h1>
+        <div class="govuk-panel__body">Currently pending approval</div>
+      </div>
+      <br />
+      <h2 class="govuk-heading-m">What happens now?</h2>
+      <p class="govuk-body">
+        The administrator will now review these details and may request additional
+        supporting information.<br /><br />
+        Your account will be approved and become active once the administrator has reviewed
+        and approved your information.<br /><br />
+        You will receive an email notification when this happens which will
+        contain a link to your active account.<br /><br />
+        If you have any queries, please contact the administrator.
+      </p>
+    </div>
+  </div>
+</ng-container>

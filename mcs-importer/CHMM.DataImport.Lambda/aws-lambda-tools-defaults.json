@@ -1,0 +1,8 @@
+
+{
+    "region" : "eu-west-2",
+    "profile" : "Dev Profile Account",
+    "s3-bucket" : "S3 Bucket",
+    "template"  : "serverless.template",
+    "stack-name" : "chmm-dataimport-lambda"
+}

@@ -1,0 +1,214 @@
+<ng-container *ngIf="account$ | async; let account">
+  <div *ngIf="!(isAddingUser || isEditingUser)">
+    <h1 class="govuk-heading-l">Manage users</h1>
+    <div class="govuk-inset-text">
+      You do not have to invite users now, they can be added a later stage.
+    </div>
+    <button class="govuk-button" (click)="addUser()">Invite user</button>
+    <ng-container *ngIf="account.users.length != 0">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          Users
+        </caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Name</th>
+            <th scope="col" class="govuk-table__header">Email</th>
+            <th scope="col" class="govuk-table__header">Job role</th>
+            <th scope="col" class="govuk-table__header">Org admin</th>
+            <th scope="col" class="govuk-table__header">General user</th>
+            <th scope="col" class="govuk-table__header">Status</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row" *ngFor="let user of account.users">
+            <td class="govuk-table__cell">
+              <a class="govuk-link" (click)="editUser(user)">
+                {{ user.firstName.value }} {{ user.lastName.value }}
+              </a>
+            </td>
+            <td class="govuk-table__cell">{{ user.email.value }}</td>
+            <td class="govuk-table__cell">{{ user.jobTitle.value }}</td>
+            <td class="govuk-table__cell">
+              {{ user.isAdminUser.value ? "Yes" : "No" }}
+            </td>
+            <td class="govuk-table__cell">
+              {{ user.isGeneralUser.value ? "Yes" : "No" }}
+            </td>
+            <td class="govuk-table__cell">
+              <span class="govuk-tag govuk-tag--purple">Invited</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>
+  <form
+    *ngIf="(isAddingUser || isEditingUser) && userForm"
+    [formGroup]="userForm"
+    (submit)="makeChanges(account.users)"
+  >
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h1 class="govuk-heading-l" *ngIf="isAddingUser">Invite user</h1>
+        <h1 class="govuk-heading-l" *ngIf="isEditingUser">Edit user</h1>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="first-name"> First name </label>
+          <input
+            class="govuk-input"
+            id="first-name"
+            name="first-name"
+            type="text"
+            formControlName="firstName"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="last-name"> Last name </label>
+          <input
+            class="govuk-input"
+            id="last-name"
+            name="last-name"
+            type="text"
+            formControlName="lastName"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="email"> Email address </label>
+          <input
+            class="govuk-input"
+            id="email"
+            name="email"
+            type="text"
+            formControlName="email"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="conf-email">
+            Confirm email address
+          </label>
+          <input
+            class="govuk-input"
+            id="conf-email"
+            name="conf-email"
+            type="text"
+            formControlName="confirmEmail"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="tel-no"> Telephone number </label>
+          <input
+            class="govuk-input"
+            id="tel-no"
+            name="tel-no"
+            type="text"
+            formControlName="telephone"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="job-role"> Job role </label>
+          <input
+            class="govuk-input"
+            id="job-role"
+            name="job-role"
+            type="text"
+            formControlName="jobTitle"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="nominated"
+                  name="nominated"
+                  type="checkbox"
+                  value="carcasses"
+                  formControlName="nominated"
+                />
+                <label
+                  class="govuk-label govuk-checkboxes__label"
+                  for="nominated"
+                >
+                  Nominate as contact for credit transfer
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <details class="govuk-details" data-module="govuk-details">
+          <summary class="govuk-details__summary">
+            <span class="govuk-details__summary-text">
+              What does it mean to nominate as credit transfer contact?
+            </span>
+          </summary>
+          <div class="govuk-details__text">
+            Select this box if you wish to be listed as a contact person for
+            your organisation for transferring of credits. This means your
+            contact details will be available on the credit transfer page and
+            other manufacturers can reach out to you for potential transfer
+            opportunities.
+          </div>
+        </details>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend">Roles</legend>
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="isGeneralUser"
+                  name="isGeneralUser"
+                  type="checkbox"
+                  value="carcasses"
+                  formControlName="isGeneralUser"
+                />
+                <label
+                  class="govuk-label govuk-checkboxes__label"
+                  for="isGeneralUser"
+                >
+                  General user
+                </label>
+              </div>
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="isAdminUser"
+                  name="isAdminUser"
+                  type="checkbox"
+                  value="carcasses"
+                  formControlName="isAdminUser"
+                />
+                <label
+                  class="govuk-label govuk-checkboxes__label"
+                  for="isAdminUser"
+                >
+                  Admin user
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="govuk-button-group">
+          <input type="submit" class="govuk-button" value="Continue" />
+          <button *ngIf="isEditingUser" (click)="deactivateUser(account.users)" class="govuk-button govuk-button--yellow">Deactivate</button>
+          <button
+            class="govuk-button govuk-button--secondary"
+            (click)="backToOverview()"
+          >
+            Back
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="govuk-button-group" *ngIf="!(isAddingUser || isEditingUser)">
+    <button class="govuk-button" (click)="continue()">Continue</button>
+    <button
+      class="govuk-button govuk-button--secondary"
+      (click)="back(account.structureGuardQuestion)"
+    >
+      Back
+    </button>
+  </div>
+</ng-container>

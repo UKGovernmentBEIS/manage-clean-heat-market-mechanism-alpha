@@ -1,0 +1,11 @@
+<h2 class="govuk-heading-m">Timeline</h2>
+<ul class="govuk-list">
+  <li *ngFor="let data of sortedData">
+    <div *ngIf="data.note">
+      <timeline-note [note]="data.note" />
+    </div>
+    <div *ngIf="data.edit">
+      <timeline-edit [edit]="data.edit" />
+    </div>
+    </li>
+</ul>

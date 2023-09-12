@@ -1,0 +1,13 @@
+<ng-container *ngIf="user$ | async; let user"
+  ><user-form
+    *ngIf="user"
+    [user]="user"
+    headerText={{headerText}}
+    submitBtnText="Save"
+    archiveBtnText={{archiveOrActivate}}
+    (submit)="onSubmit($event)"
+    (archive)="onArchive($event)"
+    (cancel)="onCancel($event)"
+  >
+  </user-form>
+</ng-container>

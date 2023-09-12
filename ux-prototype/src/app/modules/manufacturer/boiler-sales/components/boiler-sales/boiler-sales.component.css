@@ -1,0 +1,23 @@
+.govuk-notification-banner {
+  margin-bottom: 0.75rem;
+}
+
+.bs-header {
+  padding: 1rem !important;
+  background-color: #1d70b8;
+}
+
+.bs-header * {
+  padding: 0rem;
+  margin: 0rem;
+  border: none;
+  color: white !important;
+}
+
+.bs-header tbody tr:nth-child(2) > * {
+  padding-top: 1rem;
+}
+
+/*.bs-table * {
+  text-align: center;
+}*/

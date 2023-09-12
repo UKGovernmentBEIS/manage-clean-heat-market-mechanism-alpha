@@ -1,0 +1,40 @@
+<div class="govuk-phase-banner">
+  <p class="govuk-phase-banner__content">
+    <strong class="govuk-tag govuk-phase-banner__content__tag govuk-tag--red">
+      PROTOTYPE TOGGLE SCREEN
+    </strong>
+    <span class="govuk-phase-banner__text">
+      This page is only for the purpose of navigating different views in the prototype
+    </span>
+  </p>
+</div>
+<br /><br />
+
+<form [formGroup]="stateSelectorForm" (submit)="submit()">
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1 class="govuk-fieldset__heading">Select prototype view</h1>
+      </legend>
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item" *ngFor="let radio of radios">
+          <input
+            formControlName="state"
+            class="govuk-radios__input"
+            type="radio"
+            id="state-selector-{{ radio.value }}"
+            name="state"
+            value="{{ radio.value }}"
+          />
+          <label
+            class="govuk-label govuk-radios__label"
+            for="state-selector-{{ radio.value }}"
+          >
+            {{ radio.display }}
+          </label>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+  <input type="submit" class="govuk-button" value="Go" />
+</form>

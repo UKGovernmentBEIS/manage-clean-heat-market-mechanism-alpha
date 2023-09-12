@@ -1,0 +1,9 @@
+<div class="govuk-breadcrumbs">
+  <ol class="govuk-breadcrumbs__list">
+    <li *ngFor="let link of links" class="govuk-breadcrumbs__list-item">
+      <a class="govuk-breadcrumbs__link" [routerLink]="[link.route]">{{
+        link.name
+      }}</a>
+    </li>
+  </ol>
+</div>

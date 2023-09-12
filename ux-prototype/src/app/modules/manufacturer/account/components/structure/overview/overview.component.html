@@ -1,0 +1,79 @@
+<ng-container *ngIf="account$ | async; let account">
+  <h1 class="govuk-heading-l">Organisation structure</h1>
+  <form [formGroup]="account.structure" (submit)="continue()">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="organisation-name">
+            Parent organisation name
+          </label>
+          <input
+            class="govuk-input"
+            id="organisation-name"
+            name="organisation-name"
+            type="text"
+            formControlName="parent"
+          />
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half"></div>
+    </div>
+    <ng-container *ngIf="account.structure.value.subsidiaries!.length != 0">
+      <table class="govuk-table">
+        <caption class="govuk-table__caption govuk-table__caption--m">
+          Subsidiaries
+        </caption>
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Company name</th>
+            <th scope="col" class="govuk-table__header">
+              Companies house number
+            </th>
+            <th scope="col" class="govuk-table__header">
+              Nominated to manage obligation
+            </th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr
+            class="govuk-table__row"
+            *ngFor="let subsidiary of account.structure.value.subsidiaries!"
+          >
+            <td class="govuk-table__cell">{{ subsidiary.name.value }}</td>
+            <td class="govuk-table__cell">{{ subsidiary.number.value }}</td>
+            <td class="govuk-table__cell">
+              {{ subsidiary.nominated.value ? "Yes" : "No" }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+    <button class="govuk-button" (click)="addSubsidiary()">
+      Add subsidiary
+    </button>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="file">
+            Upload diagram of company structure
+          </label>
+          <input
+            class="govuk-file-upload"
+            id="file"
+            name="file"
+            type="file"
+            (change)="onFileChange(account.structure, $event)"
+            multiple
+          />
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half"></div>
+    </div>
+    <div class="govuk-button-group">
+      <input type="submit" class="govuk-button" value="Continue" />
+      <button class="govuk-button govuk-button--secondary" (click)="back()">
+        Back
+      </button>
+    </div>
+  </form>
+</ng-container>

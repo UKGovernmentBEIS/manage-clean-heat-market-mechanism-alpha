@@ -1,0 +1,6 @@
+<confirmation
+  *ngIf="data$ | async; let data"
+  [panel]="data.panel"
+  [whatNextBody]="data.whatNextBody"
+  [links]="data.links"
+></confirmation>

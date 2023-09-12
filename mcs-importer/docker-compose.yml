@@ -1,0 +1,26 @@
+version: '3.4'
+
+services:
+  adminer:
+    container_name: chmm-adminer
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080 # Note, this is not exposed in the production environment
+
+  chmm-dataimport-api:
+    image: ${DOCKER_REGISTRY-}chmm-dataimport-api
+    build:
+      context: .
+      dockerfile: CHMM.DataImport.Api/Dockerfile
+     
+  mcs-data:
+    container_name: mcs-data
+    image: postgres:13.1
+    restart: always
+    environment:
+      POSTGRES_USER: xxxxxxxxxx # Note, this is configured in Cloud SQL for non-development environments
+      POSTGRES_PASSWORD: xxxxxxxxxx # Note, this is configured in Cloud SQL for non-development environments
+      POSTGRES_DB: 'mcs-data'
+    ports:
+      - 5432:5432 # Note, this is not exposed in the production environment

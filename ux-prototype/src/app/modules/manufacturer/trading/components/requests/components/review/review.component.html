@@ -1,0 +1,78 @@
+<ng-container *ngIf="reviewRequest$ | async; let reviewRequest">
+  <ng-container *ngIf="reviewRequest != null">
+    <section id="reviewing" *ngIf="reviewing">
+      <h1 class="govuk-heading-l">
+        <ng-container *ngIf="reviewRequest.requestedBy == 'US'">
+          Are you sure you wish to cancel?
+        </ng-container>
+        <ng-container *ngIf="reviewRequest.requestedBy == 'THEM'">
+          What would you like to do with this transfer request?
+        </ng-container>
+      </h1>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Organisation</dt>
+          <dd class="govuk-summary-list__value">
+            {{ reviewRequest.manufacturer }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Amount of credits</dt>
+          <dd class="govuk-summary-list__value">
+            {{ reviewRequest.credits | number : "" : "en-GB" }}
+          </dd>
+        </div>
+      </dl>
+      <div class="govuk-button-group">
+        <ng-container *ngIf="reviewRequest.requestedBy == 'US'">
+          <a class="govuk-button" (click)="reject(reviewRequest)"> Cancel </a>
+          <a class="govuk-button govuk-button--secondary" (click)="back()">
+            Back
+          </a>
+        </ng-container>
+        <ng-container *ngIf="reviewRequest.requestedBy == 'THEM'">
+          <a class="govuk-button" (click)="approve(reviewRequest)">
+            Approve and action
+          </a>
+          <a
+            class="govuk-button govuk-button--warning"
+            (click)="reject(reviewRequest)"
+          >
+            Reject
+          </a>
+          <a class="govuk-button govuk-button--secondary" (click)="back()">
+            Back
+          </a>
+        </ng-container>
+      </div>
+    </section>
+    <section id="approved" *ngIf="approved">
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Credits successfully transferred</h1>
+        <div class="govuk-panel__body">
+          Transaction ID<br /><strong>{{ reviewRequest.id }}</strong>
+        </div>
+      </div>
+      <h2 class="govuk-heading-m">What happens now?</h2>
+      <p class="govuk-body">
+        You have successfully received
+        {{ reviewRequest.credits | number : "" : "en-GB" }} credits from
+        {{ reviewRequest.manufacturer }}.<br />
+        You can see these in your transfer ledger.
+      </p>
+      <h2 class="govuk-heading-m">What would you like to do next?</h2>
+      <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" routerLink="/manufacturer/trading/ledger"
+            >View transfer ledger</a
+          >
+        </li>
+        <li>
+          <a class="govuk-link" routerLink="/manufacturer/dashboard"
+            >Return home</a
+          >
+        </li>
+      </ul>
+    </section>
+  </ng-container>
+</ng-container>

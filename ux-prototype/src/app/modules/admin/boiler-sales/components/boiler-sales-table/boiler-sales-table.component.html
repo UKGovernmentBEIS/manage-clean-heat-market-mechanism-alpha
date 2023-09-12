@@ -1,0 +1,31 @@
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">
+    <ng-container *ngIf="quarter === 'annual'; else quarterly">
+      {{ year }}
+    </ng-container>
+    <ng-template #quarterly>Quarter {{ quarter }}</ng-template>
+    sales data
+  </caption>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Gas</th>
+      <td class="govuk-table__cell">{{ gas | number : "" : "en-GB" }}</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Oil</th>
+      <td class="govuk-table__cell">{{ oil | number : "" : "en-GB" }}</td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">Supporting evidence</th>
+      <td class="govuk-table__cell">
+        <a
+          *ngFor="let file of files"
+          class="govuk-grid-column"
+          class="govuk-link"
+          href="javascript:void(0)"
+          >{{ file.name }}</a
+        >
+      </td>
+    </tr>
+  </tbody>
+</table>

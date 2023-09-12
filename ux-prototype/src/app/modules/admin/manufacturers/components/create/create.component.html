@@ -1,0 +1,233 @@
+<section *ngIf="isCreatingManufacturer">
+  <h1 class="govuk-heading-l">Create new manufacturer account</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="organisation-name">
+          Organisation name
+        </label>
+        <input
+          class="govuk-input"
+          id="organisation-name"
+          name="organisation-name"
+          [(ngModel)]="organisationName"
+          type="text"
+        />
+      </div>
+      <div class="govuk-button-group">
+        <button class="govuk-button" (click)="showPage(2)">Continue</button>
+        <button class="govuk-button govuk-button--secondary" (click)="cancel()">
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<section *ngIf="isInvitingLeadUser">
+  <h1 class="govuk-heading-l">Invite organisation admin user</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-half">
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="first-name"> First name </label>
+        <input
+          class="govuk-input"
+          id="first-name"
+          name="first-name"
+          type="text"
+          [(ngModel)]="firstName"
+        />
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="last-name"> Last name </label>
+        <input
+          class="govuk-input"
+          id="last-name"
+          name="last-name"
+          type="text"
+          [(ngModel)]="lastName"
+        />
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="email"> Email address </label>
+        <input
+          class="govuk-input"
+          id="email"
+          name="email"
+          type="text"
+          [(ngModel)]="email"
+        />
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="conf-email">
+          Confirm email address
+        </label>
+        <input
+          class="govuk-input"
+          id="conf-email"
+          name="conf-email"
+          type="text"
+          [(ngModel)]="confirmEmail"
+        />
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="tel-no"> Telephone number </label>
+        <input
+          class="govuk-input"
+          id="tel-no"
+          name="tel-no"
+          type="text"
+          [(ngModel)]="telephone"
+        />
+      </div>
+      <div class="govuk-form-group">
+        <label class="govuk-label" for="job-role"> Job role </label>
+        <input
+          class="govuk-input"
+          id="job-role"
+          name="job-role"
+          type="text"
+          [(ngModel)]="jobTitle"
+        />
+      </div>
+      <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+          <legend class="govuk-fieldset__legend">Roles</legend>
+          <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+            <div class="govuk-checkboxes__item">
+              <input
+                class="govuk-checkboxes__input"
+                id="isGeneralUser"
+                name="isGeneralUser"
+                type="checkbox"
+                value="carcasses"
+                [(ngModel)]="isGeneralUser"
+              />
+              <label
+                class="govuk-label govuk-checkboxes__label"
+                for="isGeneralUser"
+              >
+                General user
+              </label>
+            </div>
+            <div class="govuk-checkboxes__item">
+              <input
+                class="govuk-checkboxes__input"
+                id="isAdminUser"
+                name="isAdminUser"
+                type="checkbox"
+                value="carcasses"
+                [(ngModel)]="isAdminUser"
+              />
+              <label
+                class="govuk-label govuk-checkboxes__label"
+                for="isAdminUser"
+              >
+                Admin user
+              </label>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+      <div class="govuk-button-group">
+        <button class="govuk-button" (click)="showPage(3)">Continue</button>
+        <button
+          class="govuk-button govuk-button--secondary"
+          (click)="showPage(1)"
+        >
+          Back
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<section *ngIf="isCheckingAnswers">
+  <h1 class="govuk-heading-l">Check details</h1>
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">Organisation details</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Name</dt>
+          <dd class="govuk-summary-list__value">
+            {{ organisationName }}
+          </dd>
+        </div>
+      </dl>
+      <h2 class="govuk-heading-m">Organisation admin user</h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Name</dt>
+          <dd class="govuk-summary-list__value">
+            {{ firstName }} {{ lastName }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Job role</dt>
+          <dd class="govuk-summary-list__value">
+            {{ jobTitle }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Email</dt>
+          <dd class="govuk-summary-list__value">
+            {{ email }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Telephone</dt>
+          <dd class="govuk-summary-list__value">
+            {{ telephone }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Permissions</dt>
+          <dd class="govuk-summary-list__value">
+            <span *ngIf="isGeneralUser" class="govuk-tag govuk-tag--grey"
+              >General</span
+            >
+            &nbsp;
+            <span *ngIf="isAdminUser" class="govuk-tag govuk-tag--grey"
+              >Admin</span
+            >
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+  <div class="govuk-button-group">
+    <button class="govuk-button" (click)="showPage(4)">Continue</button>
+    <button class="govuk-button govuk-button--secondary" (click)="showPage(2)">
+      Back
+    </button>
+  </div>
+</section>
+<section *ngIf="isFinished">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+      <div class="govuk-panel govuk-panel--confirmation">
+        <h1 class="govuk-panel__title">Organisation created</h1>
+        <div class="govuk-panel__body">
+          Invite has been sent to
+          <strong>{{ email }}</strong>
+        </div>
+      </div>
+      <br />
+      <h2 class="govuk-heading-m">What happens now?</h2>
+      <p class="govuk-body">
+        An email containing a link to the CHMM system has been sent to
+        {{ firstName }} {{ lastName }}. They will also receive instructions on
+        setting up their account. They have 48 hours to use the link and set up
+        their account. After this time, the link will no longer be active.
+      </p>
+      <h2 class="govuk-heading-m">What would you like to do next?</h2>
+      <ul class="govuk-list">
+        <li>
+          <a class="govuk-link" routerLink="/admin/manufacturers/overview">View manufacturers</a>
+        </li>
+        <li>
+          <a class="govuk-link" routerLink="/admin/dashboard">Return home</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

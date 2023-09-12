@@ -1,0 +1,167 @@
+<ng-container *ngIf="manufacturer">
+  <h1 class="govuk-heading-l">View organisation details</h1>
+  <p class="govuk-heading-m subtitle">{{ manufacturer.name }}</p>
+  <ng-container
+    *ngIf="
+      manufacturer.status == 'Pending' && manufacturer.requiresReview == false
+    "
+  >
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This organisation has not yet submitted their details for you to review
+      </strong>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="manufacturer.status == 'Retired'">
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This organisation has been retired
+      </strong>
+    </div>
+  </ng-container>
+  <ng-container
+    *ngIf="
+      manufacturer.status == 'Pending' && manufacturer.requiresReview == true
+    "
+  >
+    <div class="govuk-warning-text">
+      <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+      <strong class="govuk-warning-text__text">
+        <span class="govuk-warning-text__assistive">Warning</span>
+        This organisation has submitted these details which require your
+        approval before the organisation becomes active
+      </strong>
+    </div>
+    <a routerLink="../approve" class="govuk-button">Approve</a>
+  </ng-container>
+  <div
+    class="org-details"
+    *ngIf="
+      !(
+        manufacturer.status == 'Pending' && manufacturer.requiresReview == false
+      )
+    "
+  >
+    <h3 class="govuk-heading-m">
+      Organisation details
+
+      <a routerLink="." class="govuk-link">edit</a>
+    </h3>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Name</dt>
+        <dd class="govuk-summary-list__value">
+          {{ manufacturer.name }}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Registered address</dt>
+        <dd class="govuk-summary-list__value">
+          25 Woodbridge Rd Birmingham West Midlands B13 8EH
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Correspondence address</dt>
+        <dd class="govuk-summary-list__value">
+          25 Woodbridge Rd Birmingham West Midlands B13 8EH
+        </dd>
+      </div>
+    </dl>
+    <h3 class="govuk-heading-m">
+      Users <a routerLink="." class="govuk-link">edit</a>
+    </h3>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Full name</th>
+          <th scope="col" class="govuk-table__header">Email address</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <td class="govuk-table__cell">
+            {{ manufacturer.user.firstName }} {{ manufacturer.user.lastName }}
+          </td>
+          <td class="govuk-table__cell">{{ manufacturer.user.email }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <h3 class="govuk-heading-m">
+      Company structure
+      <a routerLink="." class="govuk-link">edit</a>
+    </h3>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Parent organisation name</dt>
+        <dd class="govuk-summary-list__value">
+          Parent {{ manufacturer.name }}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Diagram of company structure</dt>
+        <dd class="govuk-summary-list__value">
+          <a routerLink="." class="govuk-link">diagram.pdf</a>
+        </dd>
+      </div>
+    </dl>
+    <ng-container *ngIf="manufacturer.approval">
+      <h3 class="govuk-heading-m">Approval details</h3>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Attachments</dt>
+          <dd class="govuk-summary-list__value">
+            <a
+              class="govuk-link"
+              *ngFor="let file of manufacturer.approval.files"
+              routerLink="."
+            >
+              {{ file.name }}
+            </a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Additional comments</dt>
+          <dd class="govuk-summary-list__value">
+            {{ manufacturer.approval.notes }}
+          </dd>
+        </div>
+      </dl>
+    </ng-container>
+    <ng-container *ngIf="manufacturer.retirement">
+      <h3 class="govuk-heading-m">Retirement details</h3>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Attachments</dt>
+          <dd class="govuk-summary-list__value">
+            <a
+              class="govuk-link"
+              *ngFor="let file of manufacturer.retirement.files"
+              routerLink="."
+            >
+              {{ file.name }}
+            </a>
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Additional comments</dt>
+          <dd class="govuk-summary-list__value">
+            {{ manufacturer.retirement.notes }}
+          </dd>
+        </div>
+      </dl>
+    </ng-container>
+  </div>
+  <div class="govuk-button-group">
+    <a routerLink="../../" class="govuk-button govuk-button--secondary">Back</a>
+    <a
+      *ngIf="manufacturer.status != 'Retired'"
+      routerLink="../retire"
+      class="govuk-button govuk-button--warning"
+      >Retire</a
+    >
+  </div>
+</ng-container>

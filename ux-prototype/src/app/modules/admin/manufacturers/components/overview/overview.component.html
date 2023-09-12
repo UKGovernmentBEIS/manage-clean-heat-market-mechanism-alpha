@@ -1,0 +1,91 @@
+<h1 class="govuk-heading-l">Manufacturer accounts</h1>
+<button class="govuk-button" (click)="create()">Create new</button>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="search"> Search </label>
+          <input
+            class="govuk-input"
+            id="search"
+            name="search"
+            [(ngModel)]="search"
+            type="text"
+          />
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group show-retired">
+          <fieldset class="govuk-fieldset">
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="showRetired"
+                  name="showRetired"
+                  type="checkbox"
+                  value="carcasses"
+                  [(ngModel)]="showRetired"
+                />
+                <label
+                  class="govuk-label govuk-checkboxes__label"
+                  for="showRetired"
+                >
+                  Show retired
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<table class="govuk-table" *ngIf="manufacturers$ | async; let manufacturers">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Manufacturer name</th>
+      <th scope="col" class="govuk-table__header">Status</th>
+      <th scope="col" class="govuk-table__header">Requires review</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <ng-container *ngFor="let manufacturer of manufacturers">
+      <tr class="govuk-table__row" *ngIf="shouldShow(manufacturer)">
+        <td class="govuk-table__cell">
+          <a class="govuk-link" routerLink="../{{ manufacturer.id }}/details"> {{ manufacturer.name }} </a>
+        </td>
+        <td class="govuk-table__cell">
+          <span
+            *ngIf="manufacturer.status == 'Pending'"
+            class="govuk-tag govuk-tag--purple"
+            >Pending</span
+          >
+          <span
+            *ngIf="manufacturer.status == 'Active'"
+            class="govuk-tag govuk-tag--green"
+            >Active</span
+          >
+          <span
+            *ngIf="manufacturer.status == 'Retired'"
+            class="govuk-tag govuk-tag--red"
+            >Retired</span
+          >
+        </td>
+        <td class="govuk-table__cell">
+          <span
+            *ngIf="manufacturer.requiresReview == true"
+            class="govuk-tag govuk-tag--purple"
+            >Yes</span
+          >
+          <span
+            *ngIf="manufacturer.requiresReview == false"
+            class="govuk-tag govuk-tag--grey"
+            >No</span
+          >
+        </td>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>

@@ -1,0 +1,108 @@
+<ng-container *ngIf="manufacturer">
+  <ng-container *ngIf="!approved">
+    <h1 class="govuk-heading-l">Confirm manufacturer account approval</h1>
+    <p class="govuk-body">
+      Completing this approval will give the manufacturer users full access to
+      the CHMM system. Add attachments and comments relevant to this approval
+    </p>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="file"> Attachments </label>
+          <input
+            class="govuk-file-upload"
+            id="file"
+            name="file"
+            type="file"
+            (change)="onFileChange($event)"
+            multiple
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="more-detail">
+            Additional comments
+          </label>
+          <textarea
+            class="govuk-textarea"
+            id="more-detail"
+            name="more-detail"
+            rows="5"
+            [(ngModel)]="notes"
+          ></textarea>
+        </div>
+        <p class="govuk-body">
+          Please confirm you have conducted the necessary checks and this
+          manufacturer has provided the correct information and is eligible for
+          an account
+        </p>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="confirm"
+                  name="confirm"
+                  type="checkbox"
+                  value="carcasses"
+                />
+                <label
+                  class="govuk-label govuk-checkboxes__label"
+                  for="confirm"
+                >
+                  I confirm
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button (click)="approve()" class="govuk-button">Approve</button>
+          <a
+            routerLink="../details"
+            class="govuk-button govuk-button--secondary"
+            >Back</a
+          >
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="approved">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">Organisation approved</h1>
+          <div class="govuk-panel__body">
+            Notification has been sent to
+            <strong>{{ manufacturer.user.email }}</strong>
+          </div>
+        </div>
+        <br />
+        <h2 class="govuk-heading-m">What happens now?</h2>
+        <p class="govuk-body">
+          This organisation has been approved, and its status has changed to
+          active. An email containing a link to the CHMM system has been sent to
+          {{ manufacturer.user.firstName }} {{ manufacturer.user.lastName }}.
+          They will now be able to access the CHMM system and perform actions to
+          meet their legislative requirements.
+        </p>
+        <h2 class="govuk-heading-m">What would you like to do next?</h2>
+        <ul class="govuk-list">
+          <li>
+            <a class="govuk-link" routerLink="../details"
+              >View this manufacturer</a
+            >
+          </li>
+          <li>
+            <a class="govuk-link" routerLink="/admin/manufacturers/overview"
+              >View manufacturers</a
+            >
+          </li>
+          <li>
+            <a class="govuk-link" routerLink="/admin/dashboard">Return home</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

@@ -1,0 +1,194 @@
+<h1 class="govuk-heading-l">Boiler sales data {{ year }}</h1>
+<ng-container *ngIf="quarterDue$ | async; let quarterDue">
+  <div
+    class="govuk-notification-banner"
+    role="region"
+    aria-labelledby="govuk-notification-banner-title"
+    data-module="govuk-notification-banner"
+  >
+    <div class="govuk-notification-banner__header">
+      <h2 class="govuk-notification-banner__title">Sales report due</h2>
+    </div>
+    <div class="govuk-notification-banner__content">
+      <p class="govuk-notification-banner__heading">
+        Your Quarter {{ quarterDue.quarter }} sales data is due by
+        {{ quarterDue.dueDate | date : "dd/MM/yyyy" }}
+      </p>
+      <button
+        class="govuk-button"
+        data-module="govuk-button"
+        (click)="addQuarter(quarterDue.quarter!)"
+      >
+        Add Q{{ quarterDue.quarter }}
+      </button>
+    </div>
+  </div>
+  <details class="govuk-details" data-module="govuk-details">
+    <summary class="govuk-details__summary">
+      <span class="govuk-details__summary-text"> How do I amend my data? </span>
+    </summary>
+    <div class="govuk-details__text">
+      To amend your data once you have submitted it, please contact the CHMM
+      administration team.
+    </div>
+  </details>
+</ng-container>
+<ng-container *ngIf="boilerSales$ | async; let boilerSales">
+  <div class="bs-header">
+    <table class="govuk-table">
+      <tbody class="govuk-table__body">
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Current target</th>
+          <td class="govuk-table__cell">4% of grand total</td>
+          <td class="govuk-table__cell">
+            <ng-container
+              *ngIf="quartersSumGrand$ | async; let quartersSumGrand"
+            >
+              <strong>{{
+                quartersSumGrand * 0.04 | number : "" : "en-GB"
+              }}</strong>
+            </ng-container>
+          </td>
+        </tr>
+        <tr class="govuk-table__row">
+          <th scope="row" class="govuk-table__header">Grand total</th>
+          <td class="govuk-table__cell">
+            <ng-container
+              *ngIf="quartersSumGrand$ | async; let quartersSumGrand"
+            >
+              <strong>{{ quartersSumGrand | number : "" : "en-GB" }}</strong>
+              <br />
+              * based on quarterly data
+            </ng-container>
+          </td>
+          <td class="govuk-table__cell"></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</ng-container>
+<div class="govuk-!-margin-1">&nbsp;</div>
+<ng-container *ngIf="boilerSales$ | async; let quarters">
+  <table class="govuk-table bs-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header">Dates</th>
+        <th
+          scope="col"
+          class="govuk-table__header govuk-table__header--numeric"
+        >
+          Gas
+        </th>
+        <th
+          scope="col"
+          class="govuk-table__header govuk-table__header--numeric"
+        >
+          Oil
+        </th>
+        <th scope="col" class="govuk-table__header">Supporting evidence</th>
+        <th scope="col" class="govuk-table__header">Status</th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <ng-container *ngFor="let quarter of quarters">
+        <tr class="govuk-table__row" *ngIf="quarter.data">
+          <th scope="row" class="govuk-table__header">
+            Quarter {{ quarter.quarter }}
+          </th>
+          <td class="govuk-table__cell">
+            {{ quarter.startDate | date : "dd MMM" }}
+            to
+            {{ quarter.endDate | date : "dd MMM" }}
+          </td>
+          <ng-container
+            *ngIf="
+              (quarter.data?.oil || 0) + (quarter.data?.gas || 0) != 0;
+              else noData
+            "
+          >
+            <td class="govuk-table__cell govuk-table__cell--numeric">
+              {{ quarter.data.gas | number : "" : "en-GB" }}
+            </td>
+            <td class="govuk-table__cell govuk-table__cell--numeric">
+              {{ quarter.data.oil | number : "" : "en-GB" }}
+            </td>
+            <td class="govuk-table__cell">
+              {{ quarter.data.files.length || 0 }}
+              {{
+                (quarter.data.files.length || 0) !== 1 ? "files" : "file"
+              }}
+              uploaded
+            </td>
+          </ng-container>
+          <ng-template #noData>
+            <td colspan="3" class="govuk-table__cell"></td>
+          </ng-template>
+          <td class="govuk-table__cell">
+            <ng-container [ngSwitch]="quarter.status">
+              <div *ngSwitchCase="'Due'">
+                <strong class="govuk-tag govuk-tag--red">Due</strong>
+              </div>
+              <div *ngSwitchCase="'Submitted'">
+                <strong class="govuk-tag govuk-tag--green">Submitted</strong>
+              </div>
+              <div *ngSwitchCase="''">
+                <strong class="govuk-tag govuk-tag--grey">Cannot do yet</strong>
+              </div>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+  <p class="govuk-body">Below are your total submitted figures for the year.</p>
+  <table class="govuk-table">
+    <thead class="govuk-table__head">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header"></th>
+        <th
+          scope="col"
+          class="govuk-table__header govuk-table__header--numeric"
+        >
+          Gas
+        </th>
+        <th
+          scope="col"
+          class="govuk-table__header govuk-table__header--numeric"
+        >
+          Oil
+        </th>
+        <th scope="col" class="govuk-table__header"></th>
+        <th
+          scope="col"
+          class="govuk-table__header govuk-table__header--numeric"
+        >
+          Grand total
+        </th>
+      </tr>
+    </thead>
+    <tbody class="govuk-table__body">
+      <tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Year to date total</th>
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header govuk-table__cell--numeric">
+          <ng-container *ngIf="quartersSumGas$ | async; let quartersSumGas">
+            {{ quartersSumGas | number : "" : "en-GB" }}
+          </ng-container>
+        </th>
+        <th scope="col" class="govuk-table__header govuk-table__cell--numeric">
+          <ng-container *ngIf="quartersSumOil$ | async; let quartersSumOil">
+            {{ quartersSumOil | number : "" : "en-GB" }}
+          </ng-container>
+        </th>
+        <th scope="col" class="govuk-table__header"></th>
+        <th scope="col" class="govuk-table__header govuk-table__cell--numeric">
+          <ng-container *ngIf="quartersSumGrand$ | async; let quartersSumGrand">
+            {{ quartersSumGrand | number : "" : "en-GB" }}
+          </ng-container>
+        </th>
+      </tr>
+    </tbody>
+  </table>
+</ng-container>

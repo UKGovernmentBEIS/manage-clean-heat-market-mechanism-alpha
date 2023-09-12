@@ -1,0 +1,107 @@
+<ng-container *ngIf="manufacturer">
+  <ng-container *ngIf="!retired">
+    <h1 class="govuk-heading-l">Confirm retiring manufacturer account</h1>
+    <p class="govuk-body">
+      Completing this retirement will revoke the manufacturer users full access
+      to the CHMM system. Add attachments and comments relevant to this
+      retirement
+    </p>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="file"> Attachments </label>
+          <input
+            class="govuk-file-upload"
+            id="file"
+            name="file"
+            type="file"
+            (change)="onFileChange($event)"
+            multiple
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="more-detail">
+            Additional comments
+          </label>
+          <textarea
+            class="govuk-textarea"
+            id="more-detail"
+            name="more-detail"
+            rows="5"
+            [(ngModel)]="notes"
+          ></textarea>
+        </div>
+        <p class="govuk-body">
+          Please confirm you have conducted the necessary checks and you wish to
+          revoke this manufacturer's access from the CHMM system
+        </p>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="confirm"
+                  name="confirm"
+                  type="checkbox"
+                  value="carcasses"
+                />
+                <label
+                  class="govuk-label govuk-checkboxes__label"
+                  for="confirm"
+                >
+                  I confirm
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+        <div class="govuk-button-group">
+            <button (click)="retire()" class="govuk-button govuk-button--warning">
+              Retire
+            </button>
+          <a
+            routerLink="../details"
+            class="govuk-button govuk-button--secondary"
+            >Back</a
+          >
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *ngIf="retired">
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-three-quarters">
+        <div class="govuk-panel govuk-panel--confirmation">
+          <h1 class="govuk-panel__title">Organisation retired</h1>
+          <div class="govuk-panel__body">
+            Notification has been sent to
+            <strong>{{ manufacturer.user.email }}</strong>
+          </div>
+        </div>
+        <br />
+        <h2 class="govuk-heading-m">What happens now?</h2>
+        <p class="govuk-body">
+          This organisation has been retired, which means users in this
+          organisation can no longer access the CHMM system.
+        </p>
+        <h2 class="govuk-heading-m">What would you like to do next?</h2>
+        <ul class="govuk-list">
+          <li>
+            <a class="govuk-link" routerLink="../details"
+              >View this manufacturer</a
+            >
+          </li>
+          <li>
+            <a class="govuk-link" routerLink="/admin/manufacturers/overview"
+              >View manufacturers</a
+            >
+          </li>
+          <li>
+            <a class="govuk-link" routerLink="/admin/dashboard">Return home</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </ng-container>
+</ng-container>

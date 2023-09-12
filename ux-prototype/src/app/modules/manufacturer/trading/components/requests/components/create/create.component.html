@@ -1,0 +1,95 @@
+<section id="data-entry" *ngIf="isEnteringData">
+  <h1 class="govuk-heading-l">Initiate transfer of 2025 credits</h1>
+  <p class="govuk-body">
+    Select which organisation you are transfering credits to and how many
+  </p>
+  <div class="govuk-form-group" *ngIf="contacts$ | async; let contacts">
+    <label class="govuk-label" for="manufacturer"> Organisation </label>
+    <select
+      class="govuk-select"
+      id="manufacturer"
+      name="manufacturer"
+      [(ngModel)]="manufacturer"
+    >
+      <option selected></option>
+      <option *ngFor="let contact of contacts">
+        {{ contact.manufacturer }}
+      </option>
+    </select>
+  </div>
+  <div class="govuk-form-group">
+    <label class="govuk-label" for="credits"> Amount of credits </label>
+    <div class="govuk-input__wrapper">
+      <input
+        class="govuk-input govuk-input--width-5"
+        id="credits"
+        name="credits"
+        type="number"
+        pattern="^[0-9]+$"
+        spellcheck="false"
+        [(ngModel)]="credits"
+      />
+      <div class="govuk-input__suffix" aria-hidden="true">credits</div>
+    </div>
+  </div>
+  <div class="govuk-button-group">
+    <a class="govuk-button" (click)="check()">Continue</a>
+    <a class="govuk-button govuk-button--secondary" (click)="back()">Cancel</a>
+  </div>
+</section>
+<section id="data-check" *ngIf="isCheckingData">
+  <h1 class="govuk-heading-l">Check your submission</h1>
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Organisation</dt>
+      <dd class="govuk-summary-list__value">
+        {{ manufacturer }}
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" (click)="change()">
+          Change<span class="govuk-visually-hidden"> organisation</span>
+        </a>
+      </dd>
+    </div>
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Amount of credits</dt>
+      <dd class="govuk-summary-list__value">
+        {{ credits | number : "" : "en-GB" }}
+      </dd>
+      <dd class="govuk-summary-list__actions">
+        <a class="govuk-link" (click)="change()">
+          Change<span class="govuk-visually-hidden"> amount of credits</span>
+        </a>
+      </dd>
+    </div>
+  </dl>
+  <div class="govuk-button-group">
+    <a class="govuk-button" (click)="save()"> Save </a>
+    <a class="govuk-button govuk-button--secondary" (click)="change()">
+      Back
+    </a>
+  </div>
+</section>
+<section id="created" *ngIf="hasSavedData">
+  <div class="govuk-panel govuk-panel--confirmation">
+    <h1 class="govuk-panel__title">Transfer successfully initiated</h1>
+    <div class="govuk-panel__body">
+      Transaction ID<br /><strong>{{ id }}</strong>
+    </div>
+  </div>
+  <h2 class="govuk-heading-m">What happens now?</h2>
+  <p class="govuk-body">
+    The transfer has been initiated and is waiting on the other party to
+    approve. When they approve the transfer, the credits will move and you will
+    recieve a notification
+  </p>
+  <h2 class="govuk-heading-m">What would you like to do next?</h2>
+  <ul class="govuk-list">
+    <li>
+      <a class="govuk-link" routerLink="/manufacturer/trading/requests">View transfer requests</a>
+    </li>
+    <li>
+      <a class="govuk-link" routerLink="/manufacturer/dashboard">Return home</a>
+    </li>
+  </ul>
+</section>

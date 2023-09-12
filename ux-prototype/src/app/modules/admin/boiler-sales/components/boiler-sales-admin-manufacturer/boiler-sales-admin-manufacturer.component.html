@@ -1,0 +1,74 @@
+<breadcrumbs [links]="links"></breadcrumbs>
+
+<h1 class="govuk-heading-l">
+  Boiler Sales Data 2023: {{ manufacturer$ | async }}
+</h1>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"></th>
+      <th scope="col" class="govuk-table__header">Dates</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric">Gas</th>
+      <th scope="col" class="govuk-table__header govuk-table__header--numeric">Oil</th>
+      <th scope="col" class="govuk-table__header">Supporting<br />evidence</th>
+      <th scope="col" class="govuk-table__header">Status</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row" *ngFor="let w of quarterData$ | async">
+      <th scope="row" class="govuk-table__header">
+        <a
+          class="govuk-link"
+          routerLink="../review"
+          (click)="onQuarter(w.quarter)"
+          >Quarter {{ w.quarter }}</a
+        >
+      </th>
+      <td class="govuk-table__cell">
+            {{ w.dates[0] | date : "dd MMM" }}
+            to
+            {{ w.dates[1] | date : "dd MMM" }}
+      </td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">{{ w.gas | number : "" : "en-GB" }}</td>
+      <td class="govuk-table__cell govuk-table__cell--numeric">{{ w.oil | number : "" : "en-GB" }}</td>
+      <td class="govuk-table__cell">{{ w.evidence }}</td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--{{ w.statusColour }}">{{
+          w.status
+        }}</strong>
+      </td>
+    </tr>
+  </tbody>
+  <tfoot class="govuk-table__foot">
+    <tr class="govuk-table__row">
+      <td scope="col" class="govuk-table__cell">Year to<br />Date Total</td>
+      <td scope="col" class="govuk-table__cell"></td>
+      <td scope="col" class="govuk-table__cell govuk-table__cell--numeric">
+        {{ ytdGas | number : "" : "en-GB" }}
+      </td>
+      <td scope="col" class="govuk-table__cell govuk-table__cell--numeric">
+        {{ ytdOil | number : "" : "en-GB" }}
+      </td>
+      <td scope="col" class="govuk-table__cell"></td>
+      <td scope="col" class="govuk-table__cell"></td>
+    </tr>
+    <tr class="govuk-table__row">
+      <td scope="col" class="govuk-table__cell" colspan="6">
+        &nbsp;<br />&nbsp;
+      </td>
+    </tr>
+    <tr class="govuk-table__row">
+      <th scope="row" class="govuk-table__header">
+        <a class="govuk-link">Annual</a>
+      </th>
+      <td scope="col" class="govuk-table__cell"></td>
+      <td scope="col" class="govuk-table__cell"></td>
+      <td scope="col" class="govuk-table__cell"></td>
+      <td scope="col" class="govuk-table__cell"></td>
+      <td scope="col" class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--grey">N/A</strong>
+      </td>
+    </tr>
+  </tfoot>
+</table>

@@ -1,0 +1,32 @@
+<breadcrumbs [links]="links"></breadcrumbs>
+<h1 class="govuk-heading-l">Complete review</h1>
+<p class="govuk-body">
+  You are about to complete the review on this data. Are you sure you are happy
+  with the numbers?
+</p>
+<ng-container *ngIf="boilerSales$ | async; let boilerSales">
+  <boiler-sales-table
+    *ngIf="boilerSales.data"
+    [year]="'2023'"
+    [quarter]="boilerSales.quarter"
+    [oil]="boilerSales.data.oil"
+    [gas]="boilerSales.data.gas"
+    [files]="boilerSales.data.files"
+  ></boiler-sales-table>
+</ng-container>
+<div class="govuk-button-group">
+  <button
+    class="govuk-button govuk-button"
+    data-module="govuk-button"
+    (click)="onContinue()"
+  >
+    Continue
+  </button>
+  <button
+    class="govuk-button govuk-button--secondary"
+    data-module="govuk-button"
+    (click)="onCancel()"
+  >
+    Cancel
+  </button>
+</div>

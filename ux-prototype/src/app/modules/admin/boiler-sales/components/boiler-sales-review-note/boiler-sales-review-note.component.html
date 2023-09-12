@@ -1,0 +1,46 @@
+<breadcrumbs [links]="links"></breadcrumbs>
+<form [formGroup]="boilerSalesNoteForm" (ngSubmit)="onSubmit()">
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+        <h1
+          *ngIf="quarter$ | async; let quarter"
+          class="govuk-fieldset__heading"
+        >
+          Add note for {{ manufacturer$ | async }}
+          <span *ngIf="quarter === 'annual'; else quarterly">
+            {{ year }} boiler sales
+          </span>
+          <ng-template #quarterly>
+            <span> Quarter {{ quarter }} boiler sales</span>
+          </ng-template>
+        </h1>
+      </legend>
+      <div class="govuk-form-group">
+        <h1 class="govuk-label">
+          <label class="govuk-label" for="note"> Add note </label>
+        </h1>
+        <textarea
+          class="govuk-textarea"
+          formControlName="text"
+          id="note"
+          name="note"
+          rows="5"
+          aria-describedby="note-hint"
+        ></textarea>
+      </div>
+    </fieldset>
+  </div>
+  <div class="govuk-button-group">
+    <button class="govuk-button" type="submit" data-module="govuk-button">
+      Add
+    </button>
+    <button
+      class="govuk-button govuk-button--secondary"
+      data-module="govuk-button"
+      (click)="onCancel()"
+    >
+      Cancel
+    </button>
+  </div>
+</form>

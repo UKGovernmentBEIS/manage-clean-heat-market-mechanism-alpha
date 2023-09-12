@@ -1,0 +1,44 @@
+<breadcrumbs [links]="links"></breadcrumbs>
+<ng-container *ngIf="boilerSales$ | async; let boilerSales">
+  <h1 class="govuk-heading-l">
+    {{ boilerSales.manufacturer }}:
+    <span *ngIf="boilerSales.quarter === 'annual'; else quarterly">
+      {{ year }} Boiler Sales
+    </span>
+    <ng-template #quarterly>
+      <span> Quarter {{ boilerSales.quarter }} Boiler Sales {{ year }}</span>
+    </ng-template>
+  </h1>
+  <boiler-sales-table
+    *ngIf="boilerSales.data"
+    [year]="'2023'"
+    [quarter]="boilerSales.quarter"
+    [oil]="boilerSales.data.oil"
+    [gas]="boilerSales.data.gas"
+    [files]="boilerSales.data.files"
+  ></boiler-sales-table>
+  <div class="govuk-button-group">
+    <button
+      class="govuk-button govuk-button--secondary"
+      data-module="govuk-button"
+      (click)="onEdit()"
+    >
+      Edit
+    </button>
+    <button
+      class="govuk-button govuk-button"
+      data-module="govuk-button"
+      (click)="onAddNote()"
+    >
+      Add note
+    </button>
+    <button
+      class="govuk-button govuk-button"
+      data-module="govuk-button"
+      (click)="onComplete()"
+    >
+      Complete review
+    </button>
+  </div>
+  <timeline-list type="text" [notes]="boilerSales.notes" [edits]="boilerSales.edits"/>
+</ng-container>

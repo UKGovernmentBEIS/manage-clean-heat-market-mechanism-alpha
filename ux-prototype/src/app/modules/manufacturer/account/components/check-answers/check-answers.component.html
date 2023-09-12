@@ -1,0 +1,169 @@
+<h1 class="govuk-heading-l">Check details</h1>
+<ng-container *ngIf="account$ | async; let account">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+      <h2 class="govuk-heading-m">
+        Basic details&nbsp;
+        <a class="govuk-link" routerLink="../basic-details">edit</a>
+      </h2>
+      <dl class="govuk-summary-list">
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Name</dt>
+          <dd class="govuk-summary-list__value">
+            {{ account.basicDetails.value.name }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Registered address</dt>
+          <dd class="govuk-summary-list__value">
+            {{ account.basicDetails.value.registeredAddressLineOne }}
+            {{ account.basicDetails.value.registeredAddressLineTwo }}
+            {{ account.basicDetails.value.registeredAddressTown }}
+            {{ account.basicDetails.value.registeredAddressCounty }}
+            {{ account.basicDetails.value.registeredAddressPostCode }}
+          </dd>
+        </div>
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">Correspondence address</dt>
+          <dd
+            class="govuk-summary-list__value"
+            *ngIf="account.basicDetails.value.correspondenceSame"
+          >
+            {{ account.basicDetails.value.registeredAddressLineOne }}
+            {{ account.basicDetails.value.registeredAddressLineTwo }}
+            {{ account.basicDetails.value.registeredAddressTown }}
+            {{ account.basicDetails.value.registeredAddressCounty }}
+            {{ account.basicDetails.value.registeredAddressPostCode }}
+          </dd>
+          <dd
+            class="govuk-summary-list__value"
+            *ngIf="!account.basicDetails.value.correspondenceSame"
+          >
+            {{ account.basicDetails.value.correspondenceAddressLineOne }}
+            {{ account.basicDetails.value.correspondenceAddressLineTwo }}
+            {{ account.basicDetails.value.correspondenceAddressTown }}
+            {{ account.basicDetails.value.correspondenceAddressCounty }}
+            {{ account.basicDetails.value.correspondenceAddressPostCode }}
+          </dd>
+        </div>
+      </dl>
+      <div *ngIf="account.structureGuardQuestion.value.hasSubsidiaries">
+        <h2 class="govuk-heading-m">
+          Organisation structure&nbsp;
+          <a class="govuk-link" routerLink="../structure/guard-question"
+            >edit</a
+          >
+        </h2>
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">Parent organisation name</dt>
+            <dd class="govuk-summary-list__value">
+              {{ account.structure.value.parent }}
+            </dd>
+          </div>
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Diagram of company structure
+            </dt>
+            <dd class="govuk-summary-list__value">
+              <a
+                class="govuk-link"
+                *ngFor="let file of account.structure.value.files"
+              >
+                {{ file.name }}
+              </a>
+            </dd>
+          </div>
+        </dl>
+        <ng-container *ngIf="account.structure.value.subsidiaries!.length != 0">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th scope="col" class="govuk-table__header">Subsidiary name</th>
+                <th scope="col" class="govuk-table__header">
+                  Companies house number
+                </th>
+                <th scope="col" class="govuk-table__header">
+                  Nominated to manage obligation
+                </th>
+              </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+              <tr
+                class="govuk-table__row"
+                *ngFor="let subsidiary of account.structure.value.subsidiaries!"
+              >
+                <td class="govuk-table__cell">{{ subsidiary.name.value }}</td>
+                <td class="govuk-table__cell">{{ subsidiary.number.value }}</td>
+                <td class="govuk-table__cell">
+                  {{ subsidiary.nominated.value ? "Yes" : "No" }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-container *ngIf="account.structure.value.subsidiaries!.length == 0">
+          <p class="govuk-body">No subsidiaries set up</p>
+        </ng-container>
+      </div>
+      <div *ngIf="!account.structureGuardQuestion.value.hasSubsidiaries">
+        <h2 class="govuk-heading-m">
+          Organisation structure&nbsp;
+          <a class="govuk-link" routerLink="../structure/guard-question"
+            >edit</a
+          >
+        </h2>
+        <dl class="govuk-summary-list">
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">
+              Does your organisation operate as a group of subsidiary
+              organisations?
+            </dt>
+            <dd class="govuk-summary-list__value">No</dd>
+          </div>
+        </dl>
+      </div>
+      <h2 class="govuk-heading-m">
+        Users&nbsp;
+        <a class="govuk-link" routerLink="../users">edit</a>
+      </h2>
+      <ng-container *ngIf="account.users.length != 0">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Name</th>
+              <th scope="col" class="govuk-table__header">Email</th>
+              <th scope="col" class="govuk-table__header">Job role</th>
+              <th scope="col" class="govuk-table__header">Org admin</th>
+              <th scope="col" class="govuk-table__header">General user</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            <tr class="govuk-table__row" *ngFor="let user of account.users">
+              <td class="govuk-table__cell">
+                {{ user.firstName.value }} {{ user.lastName.value }}
+              </td>
+              <td class="govuk-table__cell">{{ user.email.value }}</td>
+              <td class="govuk-table__cell">{{ user.jobTitle.value }}</td>
+              <td class="govuk-table__cell">
+                {{ user.isAdminUser.value ? "Yes" : "No" }}
+              </td>
+              <td class="govuk-table__cell">
+                {{ user.isGeneralUser.value ? "Yes" : "No" }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-container>
+      <ng-container *ngIf="account.users.length == 0">
+        <p class="govuk-body">No users invited</p>
+      </ng-container>
+    </div>
+  </div>
+  <div class="govuk-button-group">
+    <button class="govuk-button" (click)="continue()">Submit</button>
+    <button class="govuk-button govuk-button--secondary" (click)="back()">
+      Back
+    </button>
+  </div>
+</ng-container>

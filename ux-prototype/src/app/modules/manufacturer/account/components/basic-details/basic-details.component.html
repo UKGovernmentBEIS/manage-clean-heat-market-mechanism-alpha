@@ -1,0 +1,177 @@
+<ng-container *ngIf="account$ | async; let account">
+  <form [formGroup]="account.basicDetails" (submit)="continue()">
+    <h1 class="govuk-heading-l">Edit organisation details</h1>
+    <h2 class="govuk-heading-m">Basic details</h2>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="organisation-name">
+            Organisation name
+          </label>
+          <input
+            class="govuk-input"
+            id="organisation-name"
+            name="organisation-name"
+            type="text"
+            formControlName="name"
+          />
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half"></div>
+    </div>
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+        <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+          <div class="govuk-checkboxes__item">
+            <input
+              class="govuk-checkboxes__input"
+              id="correspondenceSame"
+              name="correspondenceSame"
+              type="checkbox"
+              value="carcasses"
+              formControlName="correspondenceSame"
+            />
+            <label
+              class="govuk-label govuk-checkboxes__label"
+              for="correspondenceSame"
+            >
+              Correspondence address is the same as registered address
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <h3 class="govuk-heading-m">Registered address</h3>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="registered-address-line-one">
+            Address line one
+          </label>
+          <input
+            class="govuk-input"
+            id="registered-address-line-one"
+            name="registered-address-line-one"
+            type="text"
+            formControlName="registeredAddressLineOne"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="registered-address-line-two">
+            Address line two
+          </label>
+          <input
+            class="govuk-input"
+            id="registered-address-line-two"
+            name="registered-address-line-two"
+            type="text"
+            formControlName="registeredAddressLineTwo"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="registered-address-town">
+            Town or city
+          </label>
+          <input
+            class="govuk-input"
+            id="registered-address-town"
+            name="registered-address-town"
+            type="text"
+            formControlName="registeredAddressTown"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="registered-address-county">
+            County
+          </label>
+          <input
+            class="govuk-input"
+            id="registered-address-county"
+            name="registered-address-county"
+            type="text"
+            formControlName="registeredAddressCounty"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="registered-address-postcode">
+            Post code
+          </label>
+          <input
+            class="govuk-input"
+            id="registered-address-postcode"
+            name="registered-address-postcode"
+            type="text"
+            formControlName="registeredAddressPostCode"
+          />
+        </div>
+      </div>
+      <div
+        class="govuk-grid-column-one-half"
+        *ngIf="!account.basicDetails.value.correspondenceSame"
+      >
+        <h3 class="govuk-heading-m">Correspondence address</h3>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="correspondence-address-line-one">
+            Address line one
+          </label>
+          <input
+            class="govuk-input"
+            id="correspondence-address-line-one"
+            name="correspondence-address-line-one"
+            type="text"
+            formControlName="correspondenceAddressLineOne"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="correspondence-address-line-two">
+            Address line two
+          </label>
+          <input
+            class="govuk-input"
+            id="correspondence-address-line-two"
+            name="correspondence-address-line-two"
+            type="text"
+            formControlName="correspondenceAddressLineTwo"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="correspondence-address-town">
+            Town or city
+          </label>
+          <input
+            class="govuk-input"
+            id="correspondence-address-town"
+            name="correspondence-address-town"
+            type="text"
+            formControlName="correspondenceAddressTown"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="correspondence-address-county">
+            County
+          </label>
+          <input
+            class="govuk-input"
+            id="correspondence-address-county"
+            name="correspondence-address-county"
+            type="text"
+            formControlName="correspondenceAddressCounty"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="correspondence-address-postcode">
+            Post code
+          </label>
+          <input
+            class="govuk-input"
+            id="correspondence-address-postcode"
+            name="correspondence-address-postcode"
+            type="text"
+            formControlName="correspondenceAddressPostCode"
+          />
+        </div>
+      </div>
+    </div>
+    <input type="submit" class="govuk-button" value="Continue" />
+  </form>
+</ng-container>

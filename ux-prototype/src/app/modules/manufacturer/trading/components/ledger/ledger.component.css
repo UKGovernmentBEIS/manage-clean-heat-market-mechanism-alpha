@@ -1,0 +1,59 @@
+.main-card {
+  padding: 0.5rem 1rem 0.5rem 1rem;
+  border: solid 1px #b1b4b6;
+  border-left-color: #4c2c92;
+  border-left-width: 5px;
+  max-width: 75%;
+  margin-bottom: 1rem;
+}
+
+.main-card__title,
+.main-card__subtitle,
+.main-card__value {
+  padding: 0px;
+  margin: 0px;
+}
+
+.main-card__title {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.main-card__subtitle {
+  font-style: italic;
+  font-size: 12pt;
+  max-width: 75%;
+}
+
+.main-card__value {
+  padding-top: 5px;
+  text-align: right;
+}
+
+.main-card .govuk-grid-row:first-child {
+  margin-bottom: 1rem;
+}
+
+.plus-minus {
+  font-size: 24pt;
+  margin: 0px;
+  padding: 0px;
+  vertical-align: middle;
+  padding-right: 12px;
+  display: inline-block;
+  margin-top: -15px;
+  margin-bottom: -10px;
+}
+
+.credits-out {
+  color: #d4351c;
+}
+
+.credits-in {
+  color: #00703c;
+}
+
+.right-align {
+  text-align: right;
+  padding-right: 15px;
+}

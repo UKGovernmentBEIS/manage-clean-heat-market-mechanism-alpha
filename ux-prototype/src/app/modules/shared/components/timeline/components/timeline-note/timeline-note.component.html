@@ -1,0 +1,9 @@
+<ng-container *ngIf="note">
+  <div class="govuk-inset-text">
+    <p>{{ note.text }}</p>
+    <i [attr.data-author]="note.author">
+      Note added by {{ note.author }}
+      <span [attr.data-date]="note.date">{{ note.date }}</span>
+    </i>
+  </div>
+</ng-container>

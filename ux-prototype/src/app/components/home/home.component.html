@@ -1,0 +1,124 @@
+<div class="govuk-phase-banner">
+  <p class="govuk-phase-banner__content">
+    <strong class="govuk-tag govuk-phase-banner__content__tag govuk-tag--red">
+      PROTOTYPE TOGGLE SCREEN
+    </strong>
+    <span class="govuk-phase-banner__text">
+      This page is only for the purpose of navigating different views in the
+      prototype
+    </span>
+  </p>
+</div>
+<br /><br />
+
+<h1 class="govuk-heading-l">Welcome</h1>
+
+<p class="govuk-body">
+  Would you like to use the prototype as a manufacturer or an admin?
+</p>
+
+<form [formGroup]="adminRoleForm" (ngSubmit)="onSubmit()">
+  <div class="govuk-form-group">
+    <fieldset class="govuk-fieldset">
+      <div class="govuk-radios" data-module="govuk-radios">
+        <div class="govuk-radios__item">
+          <input
+            class="govuk-radios__input"
+            id="user-role"
+            name="userRole"
+            type="radio"
+            value="admin"
+            formControlName="userRole"
+          />
+          <label class="govuk-label govuk-radios__label" for="user-role">
+            Admin
+          </label>
+        </div>
+        <div class="govuk-radios__item">
+          <input
+            class="govuk-radios__input"
+            id="user-role-2"
+            name="userRole"
+            type="radio"
+            value="manufacturer"
+            formControlName="userRole"
+            data-aria-controls="conditional-user-role-2"
+          />
+          <label class="govuk-label govuk-radios__label" for="user-role-2">
+            Manufacturer
+          </label>
+        </div>
+        <div
+          class="govuk-radios__conditional govuk-radios__conditional--hidden"
+          id="conditional-user-role-2"
+        >
+          <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend">
+                Select account status
+              </legend>
+              <div
+                class="govuk-radios govuk-radios--inline"
+                data-module="govuk-radios"
+              >
+                <div class="govuk-radios__item">
+                  <input
+                    class="govuk-radios__input"
+                    id="manufacturerStatus-1"
+                    name="manufacturerStatus"
+                    type="radio"
+                    value="active"
+                    formControlName="manufacturerStatus"
+                  />
+                  <label
+                    class="govuk-label govuk-radios__label"
+                    for="manufacturerStatus-1"
+                  >
+                    Account active
+                  </label>
+                </div>
+                <div class="govuk-radios__item">
+                  <input
+                    class="govuk-radios__input"
+                    id="manufacturerStatus-2"
+                    name="manufacturerStatus"
+                    type="radio"
+                    value="pending"
+                    formControlName="manufacturerStatus"
+                  />
+                  <label
+                    class="govuk-label govuk-radios__label"
+                    for="manufacturerStatus-2"
+                  >
+                    Account set up
+                  </label>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+    </fieldset>
+  </div>
+
+  <button
+    role="button"
+    draggable="false"
+    class="govuk-button govuk-button--start"
+    data-module="govuk-button"
+    type="submit"
+  >
+    Start now
+    <svg
+      class="govuk-button__start-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="17.5"
+      height="19"
+      viewBox="0 0 33 40"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
+    </svg>
+  </button>
+</form>

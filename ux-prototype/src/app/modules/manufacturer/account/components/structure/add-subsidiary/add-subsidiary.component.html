@@ -1,0 +1,67 @@
+<ng-container *ngIf="account$ | async; let account">
+  <h1 class="govuk-heading-l">Organisation structure</h1>
+  <h2 class="govuk-heading-m">Add subsidiary</h2>
+  <form
+    *ngIf="addSubsidiaryForm"
+    [formGroup]="addSubsidiaryForm"
+    (submit)="continue()"
+  >
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-half">
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="organisation-name">
+            Subsidiary company name
+          </label>
+          <input
+            class="govuk-input"
+            id="name"
+            name="name"
+            type="text"
+            formControlName="name"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <label class="govuk-label" for="organisation-name">
+            Companies house number
+          </label>
+          <input
+            class="govuk-input"
+            id="number"
+            name="number"
+            type="text"
+            formControlName="number"
+          />
+        </div>
+        <div class="govuk-form-group">
+          <fieldset class="govuk-fieldset">
+            <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+              <div class="govuk-checkboxes__item">
+                <input
+                  class="govuk-checkboxes__input"
+                  id="nominated"
+                  name="nominated"
+                  type="checkbox"
+                  value="carcasses"
+                  formControlName="nominated"
+                />
+                <label
+                  class="govuk-label govuk-checkboxes__label"
+                  for="nominated"
+                >
+                  Nominated to manage obligation
+                </label>
+              </div>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+      <div class="govuk-grid-column-one-half"></div>
+    </div>
+    <div class="govuk-button-group">
+      <input type="submit" class="govuk-button" value="Continue" />
+      <button class="govuk-button govuk-button--secondary" (click)="back()">
+        Back
+      </button>
+    </div>
+  </form>
+</ng-container>

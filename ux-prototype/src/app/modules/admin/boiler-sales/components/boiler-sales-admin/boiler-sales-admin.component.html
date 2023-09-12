@@ -1,0 +1,52 @@
+<h1 class="govuk-heading-l">Boiler Sales Data 2023</h1>
+
+<table class="govuk-table">
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header"></th>
+      <th scope="col" class="govuk-table__header">Q1</th>
+      <th scope="col" class="govuk-table__header">Q2</th>
+      <th scope="col" class="govuk-table__header">Q3</th>
+      <th scope="col" class="govuk-table__header">Q4</th>
+      <th scope="col" class="govuk-table__header">Annual</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row" *ngFor="let w of data$ | async">
+      <th scope="row" class="govuk-table__header">
+        <a
+          href
+          (click)="onView(w.manufacturer)"
+          class="govuk-link"
+          routerLink="../manufacturer"
+          >{{ w.manufacturer }}</a
+        >
+      </th>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--{{ w.q1Colour }}">{{
+          w.q1
+        }}</strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--{{ w.q2Colour }}">{{
+          w.q2
+        }}</strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--{{ w.q3Colour }}">{{
+          w.q3
+        }}</strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--{{ w.q4Colour }}">{{
+          w.q4
+        }}</strong>
+      </td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--{{ w.annualColour }}">{{
+          w.annual
+        }}</strong>
+      </td>
+    </tr>
+  </tbody>
+</table>

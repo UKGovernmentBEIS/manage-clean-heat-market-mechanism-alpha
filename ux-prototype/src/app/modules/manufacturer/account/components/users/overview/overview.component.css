@@ -1,0 +1,4 @@
+.govuk-button--yellow, .govuk-button--yellow:hover, .govuk-button--yellow:focus {
+    background-color: #706100;
+    color: white;
+}

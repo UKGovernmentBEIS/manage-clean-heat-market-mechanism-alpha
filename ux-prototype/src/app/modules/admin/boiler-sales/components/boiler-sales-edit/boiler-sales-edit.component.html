@@ -1,0 +1,14 @@
+<breadcrumbs [links]="links"></breadcrumbs>
+<ng-container *ngIf="boilerSales$ | async; let boilerSales"
+  ><boiler-sales-form
+    *ngIf="boilerSales.data"
+    [quarter]="boilerSales.quarter"
+    [gas]="boilerSales.data.gas"
+    [oil]="boilerSales.data.oil"
+    submitBtnText="Save"
+    [admin]="true"
+    (submit)="onSubmit($event)"
+    (cancel)="onCancel($event)"
+  >
+  </boiler-sales-form>
+</ng-container>

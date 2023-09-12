@@ -1,0 +1,31 @@
+<h1 class="govuk-heading-l">CHMM Admin Accounts</h1>
+
+<p class="govuk-body">Add, edit and manage admin users</p>
+
+<button class="govuk-button" data-module="govuk-button" (click)="newUser()"
+          routerLink="../user">
+  Add user
+</button>
+
+<table class="govuk-table">
+  <caption class="govuk-table__caption govuk-table__caption--m">Admin Accounts</caption>
+  <thead class="govuk-table__head">
+    <tr class="govuk-table__row">
+      <th scope="col" class="govuk-table__header">Name</th>
+      <th scope="col" class="govuk-table__header">Email address</th>
+      <th scope="col" class="govuk-table__header">Status</th>
+    </tr>
+  </thead>
+  <tbody class="govuk-table__body">
+    <tr class="govuk-table__row" *ngFor="let u of users$ | async">
+      <th scope="row" class="govuk-table__header"><a
+          href
+          (click)="onView(u)"
+          class="govuk-link"
+          routerLink="../user">{{u.name}}</a></th>
+      <td class="govuk-table__cell">{{u.email}}</td>
+      <td class="govuk-table__cell">
+        <strong class="govuk-tag govuk-tag--{{u.statusColour}}">{{u.status}}</strong></td>
+    </tr>
+  </tbody>
+</table>

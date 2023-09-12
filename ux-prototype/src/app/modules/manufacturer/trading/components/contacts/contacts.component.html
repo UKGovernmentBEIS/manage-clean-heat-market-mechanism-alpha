@@ -1,0 +1,64 @@
+<nav class="moj-sub-navigation" aria-label="Sub navigation">
+  <ul class="moj-sub-navigation__list">
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        routerLink="/manufacturer/trading/ledger"
+      >
+        Transfer ledger
+      </a>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        routerLink="/manufacturer/trading/requests"
+      >
+        Transfer requests
+      </a>
+    </li>
+    <li class="moj-sub-navigation__item">
+      <a
+        class="moj-sub-navigation__link"
+        aria-current="page"
+        routerLink="/manufacturer/trading/contacts"
+      >
+        Transfer contacts
+      </a>
+    </li>
+  </ul>
+</nav>
+<section *ngIf="contacts$ | async; let contacts">
+  <h1 class="govuk-heading-l">Transfer contacts</h1>
+  <p class="govuk-body">
+    View contact details from other organisations who have opted into the
+    transfer contact list
+  </p>
+  <div class="contact" *ngFor="let contact of contacts">
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Manufacturer</dt>
+        <dd class="govuk-summary-list__value">
+          {{ contact.manufacturer }}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Named contact</dt>
+        <dd class="govuk-summary-list__value">
+          {{ contact.name }}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Email address</dt>
+        <dd class="govuk-summary-list__value">
+          {{ contact.email }}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Telephone number</dt>
+        <dd class="govuk-summary-list__value">
+          {{ contact.telephone }}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>

@@ -1,0 +1,65 @@
+<breadcrumbs [links]="links"></breadcrumbs>
+<h1 *ngIf="quarter$ | async; let quarter" class="govuk-heading-l">
+  Check
+  <span *ngIf="quarter === 'annual'; else quarterly">
+    Annual Sales Data for {{ year }}
+  </span>
+  <ng-template #quarterly>
+    <span>Boiler Sales Figures for Quarter {{ quarter }} {{ year }}</span>
+  </ng-template>
+</h1>
+<div class="govuk-warning-text">
+  <span class="govuk-warning-text__icon" aria-hidden="true">!</span>
+  <strong class="govuk-warning-text__text">
+    <span class="govuk-warning-text__assistive">Warning</span>
+    You cannot amend these figures after pressing submit.
+  </strong>
+</div>
+<h1 class="govuk-heading-m">Sales details</h1>
+<dl
+  *ngIf="boilerSalesData$ | async; let boilerSalesData"
+  class="govuk-summary-list"
+>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Gas</dt>
+    <dd class="govuk-summary-list__value">
+      {{ boilerSalesData.gas | number : "" : "en-GB" }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" routerLink="../add">
+        Change<span class="govuk-visually-hidden"> gas</span>
+      </a>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Oil</dt>
+    <dd class="govuk-summary-list__value">
+      {{ boilerSalesData.oil | number : "" : "en-GB" }}
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" routerLink="../add">
+        Change<span class="govuk-visually-hidden"> oil</span>
+      </a>
+    </dd>
+  </div>
+  <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key">Files</dt>
+    <dd class="govuk-summary-list__value">
+      <p *ngFor="let file of boilerSalesData.files" class="govuk-body">
+        {{ file.name }}
+      </p>
+    </dd>
+    <dd class="govuk-summary-list__actions">
+      <a class="govuk-link" routerLink="../add">
+        Change<span class="govuk-visually-hidden"> files</span>
+      </a>
+    </dd>
+  </div>
+</dl>
+<p class="govuk-body">
+  By clicking submit you are confirming that the details you are providing are
+  correct.
+</p>
+<button class="govuk-button" data-module="govuk-button" (click)="onSubmit()">
+  Submit
+</button>

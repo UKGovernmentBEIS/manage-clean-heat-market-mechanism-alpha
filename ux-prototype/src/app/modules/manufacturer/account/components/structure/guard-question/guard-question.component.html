@@ -1,0 +1,58 @@
+<ng-container *ngIf="account$ | async; let account">
+  <h1 class="govuk-heading-l">Organisation structure</h1>
+  <form [formGroup]="account.structureGuardQuestion" (submit)="continue(account.structureGuardQuestion)">
+    <div class="govuk-form-group">
+      <fieldset class="govuk-fieldset">
+        <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
+          <h2 class="govuk-fieldset__heading">
+            Does your organisation operate as a group of subsidiary
+            organisations?
+          </h2>
+        </legend>
+        <div
+          class="govuk-radios govuk-radios--inline"
+          data-module="govuk-radios"
+        >
+          <div class="govuk-radios__item">
+            <input
+              class="govuk-radios__input"
+              id="structure-guard-yes"
+              name="hasSubsidiaries"
+              type="radio"
+              value="Yes"
+              formControlName="hasSubsidiaries"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="structure-guard-yes"
+            >
+              Yes
+            </label>
+          </div>
+          <div class="govuk-radios__item">
+            <input
+              class="govuk-radios__input"
+              id="structure-guard-no"
+              name="hasSubsidiaries"
+              type="radio"
+              value="No"
+              formControlName="hasSubsidiaries"
+            />
+            <label
+              class="govuk-label govuk-radios__label"
+              for="structure-guard-no"
+            >
+              No
+            </label>
+          </div>
+        </div>
+      </fieldset>
+    </div>
+    <div class="govuk-button-group">
+      <input type="submit" class="govuk-button" value="Continue" />
+      <button class="govuk-button govuk-button--secondary" (click)="back()">
+        Back
+      </button>
+    </div>
+  </form>
+</ng-container>
