@@ -1,4 +1,5 @@
-﻿using Amazon.Lambda.Core;
+// Copyright (c) Crown Copyright (Department for Energy Security and Net Zero). Licensed under The MIT License (MIT).  See License file in the project root for license information.
+using Amazon.Lambda.Core;
 using RestSharp;
 using RestSharp.Authenticators;
 
