@@ -1,6 +1,6 @@
 The MIT License
 
-Copyright (C) 2014 Crown Copyright (Department for Energy Security and Net Zero)
+Copyright (C) 2023 Crown Copyright (Government Digital Service)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
