@@ -1,3 +1,4 @@
+// Copyright (c) Crown Copyright (Department for Energy Security and Net Zero). Licensed under The MIT License (MIT).  See License file in the project root for license information.
 import { IBoilerSales } from '../modules/shared/models/boiler-sales.model';
 
 export default function BoilerSalesAdminData(): IBoilerSales[] {
